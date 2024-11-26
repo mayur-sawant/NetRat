@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "packet-sniffer"
+version = "1.0.0"
+description = "A Network Packet Sniffing tool in Python 3"
+authors = ["https://github.com/mayur-sawant"]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.11"
+pyinstaller = "^5.1"
+netprotocols = "^0.5.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
