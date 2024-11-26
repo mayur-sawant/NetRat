@@ -47,4 +47,6 @@ class Decoder:
                 self._attach_protocols(frame)
                 yield self
                 del self.protocol_queue[1:]
-
+class PacketSniffer:
+    def __int__(self):
+        
