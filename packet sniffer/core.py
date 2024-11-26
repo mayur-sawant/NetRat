@@ -1,5 +1,5 @@
 #!/user/bin/env python3
-#https://github.com/mayur-sawant/packet-sniffer
+#https://github.com/mayur-sawant/Packet-Sniffer
 
 __author__="mayur-sawant"
 
@@ -49,4 +49,16 @@ class Decoder:
                 del self.protocol_queue[1:]
 class PacketSniffer:
     def __int__(self):
-        
+        self._observers= list()
+
+    def register(self,observer)->None:
+        self._observers.append(observer)
+    
+    def _notify_all(self,*args,**kwargs)->None:
+        [observer.update(*args,**kwargs) for observer in self._observers]
+    
+    def listen(self, interface:str)-> Interator:
+        for frame in Decoder(interface).execute():
+            self._notify_all(frame)
+            yield frame
+
