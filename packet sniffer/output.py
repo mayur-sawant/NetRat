@@ -51,9 +51,19 @@ class OntputToScreen(Output):
         print(f"{2*i} Protocol: {ipv4.encapsulated_protocol}")
         print(f"{2*i} Header Checksum: {ipv4.chksum_hex_str}")
 
-    def _dislpay_ipv4_data(self)->None:
-        ipv6=self._frame.arp 
-        if arp.oper == 1:
-            print(f"{i}[+] ARP Who has {arp.tpa:.>18}?-> Tell{arp.spa}" )
+    def _dislpay_ipv6_data(self)->None:
+        ipv6=self._frame.ipv6
+        print(f"{i}[+] IPv6{ipv6.src:.>27}?-> {ipv6.dst:<15}")
+        print(f"{2*i} Traffic Class:{ipv6.tclass_hex_str}")
+        print(f"{2*i} Flow Label:{ipv6.fabel_txt_str}")
+        print(f"{2*i} Payload Length:{ipv6.payload_len}")
+        print(f"{2*i} Next Header:{ipv6.encapsulated_proto}")
+        print(f"{2*i} Hop Limit:{ipv6.hop_limit}")
+
+    def _display_arp_data(self)->None:
+        arp=self._frame.arp
+        if arp.oper==1:
+            print(f"{i}[*] ARP Who has {arp.tpa.>18}? -> Tell{arp.spa}")
         else:
+            print(f"{i}[*] ARP {arp.spa:.>28} -> Is at {arp.sha}")        
             
