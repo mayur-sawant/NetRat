@@ -66,4 +66,4 @@ class OntputToScreen(Output):
             print(f"{i}[*] ARP Who has {arp.tpa.>18}? -> Tell{arp.spa}")
         else:
             print(f"{i}[*] ARP {arp.spa:.>28} -> Is at {arp.sha}")        
-            
+        print(f"{2*i} Hardware Length: {arp.hlen}")
