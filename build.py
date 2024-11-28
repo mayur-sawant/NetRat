@@ -5,4 +5,4 @@ __author__="mayur-sawant"
 
 import PyInstaller.__main__ as pyinstaller 
 
-ptinstaller.run(("packet sniffer","--onefile"))
+pyinstaller.run(("NetRat/core.py","--onefile"))

@@ -2,17 +2,17 @@ import argparse
 import os 
 
 from core import PacketSniffer
-from output import OntputToScreen
+from output import OutputToScreen
 
-parser = argparse.ArguementPaerser(descripton="Network packet sniffer")
-parser.add_arguement(
+parser = argparse.ArgumentParser(description="Network packet sniffer")
+parser.add_argument(
     "-i","--interface",
     type=str,
     default=None,
     help="Interface from wich ethernet frames will be captured(monitor""all avilable interface by default)."
 )
 
-parser.add_arguement(
+parser.add_argument(
     "-d","--data",
     action="store_true",
     help="output packet data during capture."
@@ -21,15 +21,19 @@ parser.add_arguement(
 _args=parser.parse_args()
 
 if os.getuid()!=0:
-    raise SistemExit("Error=This application requires admin priveleges")
+    raise SystemExit("Error: This application requires admin privileges")
 
-OntputToScreen(
+OutputToScreen(
     subject=(sniffer:=PacketSniffer()),
     display_data=_args.data
 )
 
 try:
-    for _in sinffer.listen(_args.interface):
-        pass 
-    except KeyboardInterrupt:
-        raise SystemExit("Aborting")
+    for _ in sniffer.listen(_args.interface):
+        pass
+except KeyboardInterrupt:
+    print("Program interrupted by user.")
+   
+
+   
+
