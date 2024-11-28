@@ -67,3 +67,46 @@ class OntputToScreen(Output):
         else:
             print(f"{i}[*] ARP {arp.spa:.>28} -> Is at {arp.sha}")        
         print(f"{2*i} Hardware Length: {arp.hlen}")
+        print(f"{2*i} Protcol Length: {arp.plen}")
+        print(f"{2*i} Operation: {arp.oper}({arp.oper_str})")
+        print(f"{2*i} Sender Hardware Address: {arp.sha}")
+        print(f"{2*i} Sender Protocol address: {arp.spa}")
+        print(f"{2*i} Target Hardware Address: {arp.tha}")
+        print(f"{2*i} Target Protocol Address: {arp.tpa}")
+
+    def _diplay_tcp_data(self)-> None:
+        tcp=self._frame.tcp
+        print(f"{i}[+] TCP {tcp.sport:.>28}->{tcp.dport:<15}")
+        print(f"{2*i} Sequence Number: {tcp.seq}")
+        print(f"{2*i} ACK Number: {tcp.ack}")
+        print(f"{2*i} Flags: {tcp.flags_hex_str}>{tcp.flags_str}")
+        print(f"{2*i} Window Size: {tcp.window}")
+        print(f"{2*i} Checksum: {tcp.chksum_hex_str}")
+        print(f"{2*i} Urgent Pointer: {tcp.urg}")
+
+    def _diplay_udp_data(self)->None:
+        udp=self._frame.udp
+        print(f"{i}[+] UDP {udp.sport:.>28}->{udp.dport}")
+        print(f"{2*i} Header Length: {udp.len}")
+        print(f"{2*i} Header checksum: {udp.chksum}")
+
+    def _diplay_icmpv4_data(self)->None:
+        ipv4=self._frame.ipv4
+        icmpv4=self._frame.icmpv4
+        print(f"{i}[+] ICMPV4 {ipv4.src:>27}->{ipv4.dst:<15}")
+        print(f"{2*i} ICMP Type: {icmpv4.type}({icmpv4.type_str})")
+        print(f"{2*i} Header Checksum: {icmpv4.chksum_hex_str}")
+
+    def _dislpay_icmpv6_data(self)->None:
+        ipv6=self._frame.ipv6
+        icmpv6=self._frame.icmpv6
+        print(f"{i}[+] ICMPv6 {ipv6.src:.>27}->{ipv6.dst:<15}")
+        print(f"{2*i} Control Message Type: {icmpv6.type}" f"({icmpv6.type_str})")
+        print(f"{2*i} Control Subtype: {icmpv6.code}")
+        print(f"{2*i} Header Checksum: {icmpv6.chcksum_hex_str}")
+
+    def _display_packet_contents(self)->None:
+        if self._display_data is True:
+            print(f"{i}[+] DATA :")
+            data=(self._frame.data.decode(errors="ignore").replace("\n", f"\n{i*2}"))
+            print(f"{i}{data}") 
