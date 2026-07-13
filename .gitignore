@@ -6,6 +6,8 @@ venv/
 
 *.csv
 *.parquet
+*.pcap
+*.pcapng
 
 __pycache__/
 *.pyc
