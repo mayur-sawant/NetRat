@@ -4,6 +4,9 @@ test-env/
 venv/
 .venv/
 
+*.csv
+*.parquet
+
 __pycache__/
 *.pyc
 
