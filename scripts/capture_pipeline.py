@@ -11,7 +11,7 @@ from datetime import datetime
 
 INTERFACE = "eth0"
 
-CAPTURE_TIME = 300   # 5 minutes
+CAPTURE_TIME = 300   #5 minutes
 
 BASE_DIR = "../data"
 
@@ -128,7 +128,11 @@ tshark_cmd.extend(
         "-E",
         "header=y",
         "-E",
-        "separator=,"
+        "separator=,",
+        "-E",
+        "quote=d",
+        "-E", 
+        "occurrence=f"
     ]
 )
 
@@ -155,6 +159,10 @@ print("[+] Cleaning data")
 
 
 df = pd.read_csv(csv_file)
+#df = pd.read_csv(
+#    csv_file,
+ #   on_bad_lines="skip"
+#)
 
 
 
@@ -195,7 +203,7 @@ df.fillna(
     {
         "src_ip":"unknown",
         "dst_ip":"unknown",
-        "protocol":"unknown",
+        "protocol":0,
         "dns_query":"",
         "tls_sni":""
     },
@@ -216,13 +224,24 @@ numeric_cols = [
     "window_size"
 ]
 
-
+"""
 for col in numeric_cols:
     df[col] = pd.to_numeric(
         df[col],
         errors="coerce"
     )
+"""
 
+for col in numeric_cols:
+    df[col] = (
+        pd.to_numeric(df[col], errors="coerce")
+        .fillna(0)
+    )
+
+df["protocol"] = pd.to_numeric(
+    df["protocol"],
+    errors="coerce"
+).fillna(-1).astype("int16")
 
 # Remove empty rows
 
@@ -234,11 +253,29 @@ df.dropna(
 
 
 # Save parquet
-
+"""
 df.to_parquet(
     parquet_file,
     index=False
 )
+
+# Delete temporary CSV after successful conversion
+if os.path.exists(csv_file):
+    os.remove(csv_file)
+    print("[+] Temporary CSV removed")
+"""
+
+try:
+    df.to_parquet(parquet_file, index=False)
+
+    if os.path.exists(csv_file):
+        os.remove(csv_file)
+        print("[+] Temporary CSV removed")
+
+    print(f"[+] Saved: {parquet_file}")
+
+except Exception as e:
+    print(f"[ERROR] Failed to save Parquet: {e}")
 
 
 
