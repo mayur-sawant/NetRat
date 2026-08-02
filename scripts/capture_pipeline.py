@@ -232,11 +232,17 @@ for col in numeric_cols:
     )
 """
 
-for col in numeric_cols:
+'''for col in numeric_cols:
     df[col] = (
         pd.to_numeric(df[col], errors="coerce")
         .fillna(0)
-    )
+    )'''
+
+
+
+
+
+
 
 df["protocol"] = pd.to_numeric(
     df["protocol"],
