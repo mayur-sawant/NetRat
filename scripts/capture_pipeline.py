@@ -11,7 +11,7 @@ from pathlib import Path
 
 INTERFACE = "5"
 
-CAPTURE_TIME = 10#300   #5 minutes
+CAPTURE_TIME = 300   #5 minutes
 
 BASE_DIR = Path(__file__).resolve().parent.parent / "data"
 
