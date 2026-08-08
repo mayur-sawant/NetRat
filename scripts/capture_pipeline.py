@@ -3,24 +3,23 @@ import pandas as pd
 import os
 import sys
 from datetime import datetime
-
+from pathlib import Path
 
 
 # Configuration
 
 
-INTERFACE = "eth0"
+INTERFACE = "5"
 
-CAPTURE_TIME = 300   #5 minutes
+CAPTURE_TIME = 10#300   #5 minutes
 
-BASE_DIR = "../data"
+BASE_DIR = Path(__file__).resolve().parent.parent / "data"
 
-RAW_DIR = f"{BASE_DIR}/raw"
-PACKET_DIR = f"{BASE_DIR}/packets"
+RAW_DIR = BASE_DIR / "raw"
+PACKET_DIR = BASE_DIR / "packets"
 
-
-os.makedirs(RAW_DIR, exist_ok=True)
-os.makedirs(PACKET_DIR, exist_ok=True)
+RAW_DIR.mkdir(parents=True, exist_ok=True)
+PACKET_DIR.mkdir(parents=True, exist_ok=True)
 
 
 
