@@ -1,10 +1,7 @@
 import pandas as pd
 from pathlib import Path
 
-
-# ============================================================
 # Configuration
-# ============================================================
 
 BASE_DIR = Path(__file__).resolve().parent.parent / "data"
 FLOW_DIR = BASE_DIR / "flows"
@@ -18,9 +15,8 @@ if not flow_files:
     exit()
 
 
-# ============================================================
-# Read latest flow file
-# ============================================================
+# Read flow file
+
 
 flow_file = max(flow_files, key=lambda f: f.stat().st_mtime)
 
@@ -29,9 +25,8 @@ print(f"\n[+] Reading: {flow_file.name}")
 df = pd.read_parquet(flow_file)
 
 
-# ============================================================
-# Basic information
-# ============================================================
+# Basic info
+
 
 print("\n" + "=" * 60)
 print("BASIC INFORMATION")
@@ -44,9 +39,8 @@ print("\nColumns:")
 print(df.columns.tolist())
 
 
-# ============================================================
 # Missing values
-# ============================================================
+
 
 print("\n" + "=" * 60)
 print("MISSING VALUES")
@@ -57,9 +51,7 @@ missing = df.isna().sum()
 print(missing[missing > 0])
 
 
-# ============================================================
 # Duplicate flow keys
-# ============================================================
 
 print("\n" + "=" * 60)
 print("DUPLICATE FLOW KEYS")
@@ -69,10 +61,8 @@ duplicates = df["flow_key"].duplicated().sum()
 
 print(f"Duplicate flow keys: {duplicates}")
 
-
-# ============================================================
 # Packet counts
-# ============================================================
+
 
 print("\n" + "=" * 60)
 print("PACKET COUNT")
@@ -81,9 +71,7 @@ print("=" * 60)
 print(df["packet_count"].describe())
 
 
-# ============================================================
 # Bytes
-# ============================================================
 
 print("\n" + "=" * 60)
 print("TOTAL BYTES")
@@ -92,9 +80,7 @@ print("=" * 60)
 print(df["total_bytes"].describe())
 
 
-# ============================================================
 # Duration
-# ============================================================
 
 print("\n" + "=" * 60)
 print("FLOW DURATION")
@@ -103,9 +89,7 @@ print("=" * 60)
 print(df["duration"].describe())
 
 
-# ============================================================
 # Forward / backward validation
-# ============================================================
 
 print("\n" + "=" * 60)
 print("DIRECTION VALIDATION")
@@ -135,9 +119,7 @@ print(f"Packet count mismatches: {packet_errors}")
 print(f"Byte count mismatches: {byte_errors}")
 
 
-# ============================================================
 # Duration validation
-# ============================================================
 
 print("\n" + "=" * 60)
 print("TIMESTAMP VALIDATION")
@@ -155,9 +137,7 @@ print(f"End before start: {timestamp_errors}")
 print(f"Negative durations: {negative_duration}")
 
 
-# ============================================================
 # Rate validation
-# ============================================================
 
 print("\n" + "=" * 60)
 print("RATE VALIDATION")
@@ -177,9 +157,7 @@ print(f"Invalid packet rates: {invalid_packet_rates}")
 print(f"Invalid byte rates: {invalid_byte_rates}")
 
 
-# ============================================================
 # Protocol distribution
-# ============================================================
 
 print("\n" + "=" * 60)
 print("PROTOCOL DISTRIBUTION")
@@ -188,9 +166,7 @@ print("=" * 60)
 print(df["protocol"].value_counts())
 
 
-# ============================================================
 # Labels
-# ============================================================
 
 print("\n" + "=" * 60)
 print("LABEL DISTRIBUTION")
@@ -199,9 +175,7 @@ print("=" * 60)
 print(df["label"].value_counts())
 
 
-# ============================================================
 # Flow summary
-# ============================================================
 
 print("\n" + "=" * 60)
 print("FLOW SUMMARY")
